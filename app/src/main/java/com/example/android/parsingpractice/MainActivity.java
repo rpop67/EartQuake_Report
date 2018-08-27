@@ -1,8 +1,11 @@
 package com.example.android.parsingpractice;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -59,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
                     JSONObject Props=FeatureObj.getJSONObject("properties");
                     Double magnitude= Props.getDouble("mag");
                     String Location=Props.getString("place");
+                    String QuakeURL=Props.getString("url");
 
                     Long timeHere =Props.getLong("time");
                     Date date= new Date(timeHere);
@@ -70,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-                    JSONList.add(new Earthquake(magnitude,Location,time));
+                    JSONList.add(new Earthquake(magnitude,Location,time,QuakeURL));
                     //System.out.println(magnitude + "  "+ Location+"  "+ time);
 
                 }
@@ -78,6 +82,22 @@ public class MainActivity extends AppCompatActivity {
         EarthquakeAdapter adapter = new EarthquakeAdapter(this, JSONList);
         listView = findViewById(R.id.list1);
         listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+
+                String ClickedURL = JSONList.get(position).getUrl();
+                // TODO Auto-generated method stub
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(ClickedURL));
+                startActivity(i);
+
+            }
+        });
 
     }
 

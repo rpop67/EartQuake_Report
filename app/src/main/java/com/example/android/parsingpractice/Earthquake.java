@@ -8,12 +8,14 @@ public class Earthquake {
     Double magnitude;
     String location;
     String date;
+    String url;
 
-    public Earthquake(Double mag,String loc, String dateRec)
+    public Earthquake(Double mag,String loc, String dateRec,String urlRec)
     {
         magnitude=mag;
         location=loc;
         date=dateRec;
+        url=urlRec;
     }
 
     public Double getMagnitude() {
@@ -27,4 +29,8 @@ public class Earthquake {
     public String getDate() {
         return date;
     }
+
+    public String getUrl(){ return url;}
+
+
 }
